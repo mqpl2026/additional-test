@@ -13,6 +13,8 @@
 ├── runner.py                              # 判题脚本（编译 + 运行 + 比对）
 ├── gen_exam1.py / gen_exam2.py / gen_exam3.py   # 测试数据生成器（含参考解）
 ├── gen_html.py                            # 网页生成器
+├── 审查报告.md                              # 复杂度与限时审查报告
+├── .gitignore                             # git 忽略规则
 ```
 
 - 每个题目文件夹内：`NN.in`（输入）与 `NN.out`（期望输出），`NN` 从 `01` 起编号。
@@ -57,4 +59,4 @@ python runner.py --exam 2 --probs all --code 你的代码.cpp --mode submit
 
 ## 编译环境
 
-g++ 16.1.0，C++17（`runner.py` 使用 `-std=c++17 -O2 -w`）。超时限制 5 秒/组。
+g++ 16.1.0，C++17（`runner.py` 使用 `-std=c++17 -O2 -w`）。超时限制**按题默认 1 秒**，部分数据规模大 / I/O 重的题目放宽到 2 秒（详见 `runner.py` 中 `TIME_LIMITS` 与网页中每题的「运行时间限制」）。
