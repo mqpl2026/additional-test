@@ -1,0 +1,261 @@
+<!DOCTYPE html><html lang='zh-CN'><head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<title>模拟试卷（一）· 偏向算法综合与模拟实现</title><style>
+* { box-sizing: border-box; }
+body { font-family: -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif;
+       margin: 0; background: #f4f5f7; color: #1f2430; }
+header { background: #1f2430; color: #fff; padding: 22px 28px; }
+header h1 { margin: 0 0 6px; font-size: 22px; }
+header p { margin: 0; opacity: .8; font-size: 13px; }
+.wrap { max-width: 980px; margin: 0 auto; padding: 22px; }
+.card { background: #fff; border: 1px solid #e3e6ea; border-radius: 10px;
+        padding: 20px 24px; margin: 16px 0; box-shadow: 0 1px 3px rgba(0,0,0,.05); }
+.card h2 { margin: 0 0 4px; font-size: 18px; }
+.tag { display: inline-block; font-size: 12px; padding: 2px 10px; border-radius: 12px;
+       margin-left: 8px; vertical-align: middle; color: #fff; }
+.g1 { background: #2e9e5b; } .g2 { background: #d98616; } .g3 { background: #c0392b; }
+.sec-label { font-size: 12px; color: #8a93a2; letter-spacing: 1px; text-transform: uppercase; }
+.card h3 { font-size: 14px; margin: 16px 0 6px; color: #34405a;
+           border-left: 3px solid #4a6cf7; padding-left: 8px; }
+.card p, .card li { font-size: 14px; line-height: 1.7; }
+code { background: #eef1f6; padding: 1px 5px; border-radius: 4px; font-size: 13px; }
+.samples { display: flex; flex-wrap: wrap; gap: 14px; }
+.sample { flex: 1 1 300px; border: 1px solid #e3e6ea; border-radius: 8px; overflow: hidden; }
+.sample .sh { background: #f0f3f9; padding: 6px 12px; font-size: 12px; font-weight: 600; color: #4a6cf7; }
+.sample pre { margin: 0; padding: 10px 12px; font-family: "Cascadia Code", Consolas, monospace;
+              font-size: 13px; white-space: pre; overflow-x: auto; background: #fafbfc; }
+.sample .lbl { font-size: 11px; color: #8a93a2; padding: 4px 12px 0; }
+.note { background: #fff8e6; border: 1px solid #f2e2b0; border-radius: 8px;
+        padding: 10px 14px; font-size: 13px; margin: 10px 0; }
+.limits { font-size: 13px; color: #34405a; background: #eef2fb; border: 1px solid #dbe3fb;
+          border-radius: 6px; padding: 6px 12px; margin: 10px 0 0; }
+.limits b { color: #1f2430; }
+.cnote { background: #fff8e6; border: 1px solid #f2e2b0; border-radius: 6px;
+         padding: 8px 12px; font-size: 12.5px; line-height: 1.6; color: #6b5410; margin: 8px 0 0; }
+.cnote b { color: #8a5a00; }
+</style></head><body>
+<header><h1>模拟试卷（一）· 偏向算法综合与模拟实现</h1><p>基础巩固 / 能力提升 / 极限挑战 · 共 9 题 · 点击各题查看样例</p></header>
+<div class='wrap'>
+<div class='card'>
+  <div class='sec-label'>第 1 题 / 共 9 题</div>
+  <h2>括号嵌套的类型推导<span class='tag g1'>基础巩固</span></h2>
+  <p class='limits'><b>运行时间限制：</b>1 秒　<b>运行空间占用限制：</b>64 MB</p>
+  <h3>题目描述</h3><p>给定一个只包含 <code>char</code>、<code>int</code>、<code>float</code>、<code>double</code>、<code>longlong</code> 以及加法 <code>+</code> 运算符的合法表达式，表达式中允许出现括号 <code>()</code>。请判断该表达式最终运算结果的数据类型。<br>规则：括号只改变优先级，不改变类型推导；运算时类型向上转换，结果取两者中“更高”的类型。类型由低到高为：<code>char &lt; int &lt; float &lt; double &lt; longlong</code>。由于只有加法，最终类型就是表达式中出现的最高类型。</p>
+  <h3>输入格式</h3><p>一行，一个合法表达式（无空格），长度不超过 1000。</p>
+  <h3>输出格式</h3><p>一行，结果类型的字符串。</p>
+  <h3>样例</h3><div class='samples'><div class="sample">
+  <div class='sh">样例 1</div>
+  <div class="lbl">输入</div><pre>int+float
+</pre>
+  <div class="lbl">输出</div><pre>float
+</pre>
+</div><div class="sample">
+  <div class="sh">样例 2</div>
+  <div class="lbl">输入</div><pre>char+int+double
+</pre>
+  <div class="lbl">输出</div><pre>double
+</pre>
+</div></div>
+</div>
+<div class='card'>
+  <div class='sec-label'>第 2 题 / 共 9 题</div>
+  <h2>动态步长模拟（生命值）<span class='tag g1'>基础巩固</span></h2>
+  <p class='limits'><b>运行时间限制：</b>1 秒　<b>运行空间占用限制：</b>64 MB</p>
+  <p class='cnote'>⚠ 参数 <code>D</code> 为路径长度，直接逐步模拟为 O(D)。若 D 可达 10<sup>9</sup>，需改为只在泉水坐标之间跳跃处理（O(N log N)），否则 O(D) 会超时。当前测试数据 D≤30，未设大规模。</p>
+  <h3>题目描述</h3><p>小P 从坐标 0 出发，每秒向坐标增大的方向前进 1 个单位，必须到达终点 D。他初始血量为 H，最大血量也为 H。<br>游戏中有 N 个泉水，第 i 个泉水位于整数坐标 X<sub>i</sub>（互不相同，均在 1 到 D 之间），回复量 V<sub>i</sub>。<br>小P 从坐标 0 开始，依次经过坐标 1, 2, …, D：每移动一步（到达下一个坐标）先扣除 1 点血量；若扣除后血量 ≤ 0，则小P 死亡；若到达的坐标恰好有泉水，则立即回复 V<sub>i</sub> 点血量（不超过最大血量 H）。<br>请计算小P 到达终点 D 时的血量；若中途死亡则输出 -1。</p>
+  <h3>输入格式</h3><p>第一行三个整数 H, D, N。第二行 N 对整数 X<sub>i</sub> V<sub>i</sub>（保证互不相同）。</p>
+  <h3>输出格式</h3><p>一行，到达终点时的血量（整数）；若死亡输出 -1。</p>
+  <h3>样例</h3><div class='samples'><div class="sample">
+  <div class="sh">样例 1</div>
+  <div class="lbl">输入</div><pre>10 5 2
+3 4 5 2
+</pre>
+  <div class="lbl">输出</div><pre>10
+</pre>
+</div><div class="sample">
+  <div class="sh">样例 2</div>
+  <div class="lbl">输入</div><pre>5 10 2
+2 3 7 3
+</pre>
+  <div class='lbl">输出</div><pre>-1
+</pre>
+</div></div>
+</div>
+<div class='card'>
+  <div class='sec-label'>第 3 题 / 共 9 题</div>
+  <h2>字符串的 Z 变换（之字形分行）<span class='tag g1'>基础巩固</span></h2>
+  <p class='limits'><b>运行时间限制：</b>1 秒　<b>运行空间占用限制：</b>64 MB</p>
+  <h3>题目描述</h3><p>给定一个字符串 S 和行数 R。请先将 S 的字符按字母表顺序重新排序，然后以“之”字形（Z 字形）填入 R 行的网格中：第一个字符放在第 1 行，之后逐行下移，到达第 R 行后逐行上移，如此往复（行号变化为 1→2→…→R→R-1→…→1→2→…）。<br>最后按行输出：每一行按填入顺序拼接成一个字符串，共 R 行（每行一个字符串，不含多余空格）。</p>
+  <h3>输入格式</h3><p>第一行字符串 S（仅小写字母）。第二行整数 R（R ≥ 1）。</p>
+  <h3>输出格式</h3><p>R 行，每行一个字符串。</p>
+  <h3>样例</h3><div class='samples'><div class="sample">
+  <div class="sh">样例 1</div>
+  <div class="lbl">输入</div><pre>abcdefg
+3
+</pre>
+  <div class="lbl">输出</div><pre>ae
+bdf
+cg
+</pre>
+</div><div class="sample">
+  <div class="sh">样例 2</div>
+  <div class="lbl">输入</div><pre>ABCDE
+2
+</pre>
+  <div class="lbl">输出</div><pre>ACE
+BD
+</pre>
+</div></div>
+</div>
+<div class='card'>
+  <div class='sec-label'>第 4 题 / 共 9 题</div>
+  <h2>区间合并与最大重叠<span class='tag g2'>能力提升</span></h2>
+  <p class='limits'><b>运行时间限制：</b>2 秒　<b>运行空间占用限制：</b>256 MB</p>
+  <p class='cnote'>⚠ <b>复杂度要求：</b>需 O(n log n) 扫描线（用堆维护当前活跃区间的 maxR / minL）。暴力 O(n<sup>2</sup>) 枚举配对在 n=2×10<sup>5</sup> 时约 4×10<sup>10</sup> 操作，必超时。数据规模 <b>n≤2×10<sup>5</sup></b>（测试数据已放大到 2×10<sup>5</sup>）。</p>
+  <h3>题目描述</h3><p>数轴上有 N 条线段，第 i 条覆盖闭区间 [L<sub>i</sub>, R<sub>i</sub>]。你可以选择任意一个点 P，并将所有包含点 P 的线段合并成一条大线段（这些线段因都含 P，其并集仍是一条连续线段，左端点为其中最小的 L，右端点为其中最大的 R）。<br>求合并后大线段的最大可能长度。等价地，最大化 (max R<sub>i</sub> − min L<sub>i</sub>)，其中 i 取遍所有覆盖某个公共点 P 的线段。</p>
+  <h3>输入格式</h3><p>第一行整数 N。接下来 N 行，每行两个整数 L<sub>i</sub> R<sub>i</sub>。</p>
+  <h3>输出格式</h3><p>一行，最大长度（整数）。</p>
+  <h3>样例</h3><div class='samples'><div class="sample">
+  <div class="sh">样例 1</div>
+  <div class="lbl">输入</div><pre>3
+1 5
+2 6
+3 4
+</pre>
+  <div class="lbl">输出</div><pre>5
+</pre>
+</div><div class="sample">
+  <div class='sh">样例 2</div>
+  <div class="lbl">输入</div><pre>3
+1 2
+3 4
+5 6
+</pre>
+  <div class="lbl">输出</div><pre>1
+</pre>
+</div></div>
+</div>
+<div class='card'>
+  <div class='sec-label'>第 5 题 / 共 9 题</div>
+  <h2>走迷宫的最少步数<span class='tag g2'>能力提升</span></h2>
+  <p class='limits'><b>运行时间限制：</b>2 秒　<b>运行空间占用限制：</b>256 MB</p>
+  <p class='cnote'>BFS 最短路 O(N·M)，每个格子含行/列端点传送（至多 8 条边）。建议 <b>N·M≤10<sup>6</sup></b>（当前 N,M≤6）。BFS 即最优，勿用重复搜索或全源搜索。</p>
+  <h3>题目描述</h3><p>给定一个 N×M 的网格，<code>#</code> 表示障碍，<code>.</code> 表示可通行。起点为左上角 (1,1)，终点为右下角 (N,M)，保证这两个格子均可通行。<br>每次操作消耗 1 点，可以是：<br>① 向上下左右移动一步到相邻的可通行格子；<br>② 传送到当前行的两端之一，即 (x,y) → (x,1) 或 (x,y) → (x,M)；<br>③ 传送到当前列的两端之一，即 (x,y) → (1,y) 或 (x,y) → (N,y)。<br>求从起点到终点的最少操作次数；若无法到达输出 -1。</p>
+  <h3>输入格式</h3><p>第一行两个整数 N, M。接下来 N 行，每行 M 个字符（<code>#</code> 或 <code>.</code>）。</p>
+  <h3>输出格式</h3><p>一行，最少操作次数；无法到达输出 -1。</p>
+  <h3>样例</h3><div class='samples'><div class="sample">
+  <div class="sh">样例 1</div>
+  <div class="lbl">输入</div><pre>2 2
+..
+..
+</pre>
+  <div class="lbl">输出</div><pre>2
+</pre>
+</div><div class="sample">
+  <div class='sh">样例 2</div>
+  <div class="lbl">输入</div><pre>3 3
+.#.
+.#.
+...
+</pre>
+  <div class="lbl">输出</div><pre>2
+</pre>
+</div></div>
+</div>
+<div class='card'>
+  <div class='sec-label'>第 6 题 / 共 9 题</div>
+  <h2>进制转换与小数精度<span class='tag g2'>能力提升</span></h2>
+  <p class='limits'><b>运行时间限制：</b>1 秒　<b>运行空间占用限制：</b>64 MB</p>
+  <h3>题目描述</h3><p>给定一个十进制数 D（可能含小数部分，以字符串形式给出）和一个目标进制 K（2 ≤ K ≤ 16）。请将 D 转换为 K 进制。<br>整数部分用 K 进制表示（大于 9 的数字用大写字母 A–F）；小数部分采用“乘基取整”法：若能在有限步内除尽，则输出精确的小数部分；若小数部分无限循环，则保留小数点后 8 位（直接截断，不四舍五入）。若 D 没有小数部分，则不输出小数点。</p>
+  <h3>输入格式</h3><p>第一行字符串 D。第二行整数 K。</p>
+  <h3>输出格式</h3><p>一行，K 进制表示的字符串。</p>
+  <h3>样例</h3><div class='samples'><div class="sample">
+  <div class='sh">样例 1</div>
+  <div class="lbl">输入</div><pre>0.5
+2
+</pre>
+  <div class="lbl">输出</div><pre>0.1
+</pre>
+</div><div class="sample">
+  <div class="sh">样例 2</div>
+  <div class="lbl">输入</div><pre>3.14159
+16
+</pre>
+  <div class='lbl">输出</div><pre>3.243F3E03
+</pre>
+</div></div>
+</div>
+<div class='card'>
+  <div class='sec-label'>第 7 题 / 共 9 题</div>
+  <h2>贪心排队问题（最小平均等待时间）<span class='tag g2'>能力提升</span></h2>
+  <p class='limits'><b>运行时间限制：</b>1 秒　<b>运行空间占用限制：</b>64 MB</p>
+  <h3>题目描述</h3><p>有 N 个人排队打水，第 i 个人打水需要 T<sub>i</sub> 分钟。只有 1 个水龙头。你可以把队伍切成若干段，每一段内部可以任意重新排序，规则是每一段内打水时间短的人优先（即每一段都按打水时间升序打水）。<br>求所有人的平均等待时间的最小值（等待时间 = 从开始打水到该人打完水的时间）。输出保留两位小数。</p>
+  <h3>输入格式</h3><p>第一行整数 N。第二行 N 个整数 T<sub>i</sub>。</p>
+  <h3>输出格式</h3><p>一行，最小平均等待时间（保留两位小数）。</p>
+  <h3>样例</h3><div class='samples'><div class="sample">
+  <div class="sh">样例 1</div>
+  <div class="lbl">输入</div><pre>4
+3 1 4 2
+</pre>
+  <div class='lbl">输出</div><pre>5.00
+</pre>
+</div><div class="sample">
+  <div class="sh">样例 2</div>
+  <div class='lbl">输入</div><pre>4
+5 5 5 5
+</pre>
+  <div class='lbl">输出</div><pre>12.50
+</pre>
+</div></div>
+</div>
+<div class='card'>
+  <div class='sec-label'>第 8 题 / 共 9 题</div>
+  <h2>矩阵路径最大异或和<span class='tag g3'>极限挑战</span></h2>
+  <p class='limits'><b>运行时间限制：</b>2 秒　<b>运行空间占用限制：</b>256 MB</p>
+  <p class='cnote'>数据范围 N,M≤12；用<b>集合 DP</b> 合并异或值，O(N·M·|集合|)。暴力枚举所有路径约 C(N+M-2, N-1)≈7×10<sup>5</sup>（N=M=12）时尚可，但若放大规模须慎重（异或集合可能膨胀）。本题重在“集合 DP 技巧”，规模宜保持较小。</p>
+  <h3>题目描述</h3><p>给定一个 N×M 的矩阵，每个格子里有一个非负整数（0 ≤ a[i][j] &lt; 2<sup>31</sup>）。从左上角 (1,1) 走到右下角 (N,M)，每次只能向右或向下走一步。路径上所有数字做异或（XOR）运算。<br>求所有可能路径中异或和的最大值。数据范围：1 ≤ N, M ≤ 12。</p>
+  <h3>输入格式</h3><p>第一行两个整数 N, M。接下来 N 行，每行 M 个整数。</p>
+  <h3>输出格式</h3><p>一行，最大异或和（整数）。</p>
+  <h3>样例</h3><div class='samples'><div class="sample">
+  <div class='sh">样例 1</div>
+  <div class="lbl">输入</div><pre>2 2
+1 2
+3 4
+</pre>
+  <div class="lbl">输出</div><pre>7
+</pre>
+</div><div class="sample">
+  <div class="sh">样例 2</div>
+  <div class='lbl">输入</div><pre>1 1
+5
+</pre>
+  <div class="lbl">输出</div><pre>5
+</pre>
+</div></div>
+</div>
+<div class='card'>
+  <div class='sec-label'>第 9 题 / 共 9 题</div>
+  <h2>模拟大数除法（高精除以低精）<span class='tag g3'>极限挑战</span></h2>
+  <p class='limits'><b>运行时间限制：</b>1 秒　<b>运行空间占用限制：</b>64 MB</p>
+  <h3>题目描述</h3><p>给定一个非负大整数 A（十进制字符串，长度不超过 100）和一个正整数 B（1 ≤ B ≤ 10<sup>18</sup>）以及一个非负整数 K（K ≤ 1000）。计算 A ÷ B 的商，精确到小数点后 K 位（直接截断，不四舍五入）。<br>若 K = 0 则不输出小数部分。</p>
+  <h3>输入格式</h3><p>第一行字符串 A。第二行整数 B。第三行整数 K。</p>
+  <h3>输出格式</h3><p>一行，商（含小数点后 K 位）。</p>
+  <h3>样例</h3><div class='samples'><div class="sample">
+  <div class="sh">样例 1</div>
+  <div class="lbl">输入</div><pre>100
+3
+5
+</pre>
+  <div class="lbl">输出</div><pre>33.33333
+</pre>
+</div><div class="sample">
+  <div class='sh">样例 2</div>
+  <div class='lbl">输入</div><pre>7
+2
+4
+</pre>
+  <div class='lbl">输出</div><pre>3.5000
+</pre>
+</div></div>
+</div>
+</div></body></html>
